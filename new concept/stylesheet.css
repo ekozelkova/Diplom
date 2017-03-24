@@ -13,3 +13,15 @@ li {
     display: inline-block;
     margin-right: 100px;
 }
+
+
+/*4-levels*/
+.lower-levels h3 {
+    margin-top: 66px;
+    margin-bottom: 25px;
+}
+
+.upper-levels h3 {
+    margin-top: 66px;
+    margin-bottom: 25px;
+}
