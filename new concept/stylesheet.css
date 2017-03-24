@@ -1,0 +1,15 @@
+li {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+
+/*2-list-of-blocks*/
+.block-cont {
+    margin-bottom: 89px;
+}
+
+.block-cont .content-list {
+    display: inline-block;
+    margin-right: 100px;
+}
