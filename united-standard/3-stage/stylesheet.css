@@ -1,0 +1,25 @@
+.lower-levels-header {
+    margin-bottom: 27px;
+    margin-top: 45px;
+}
+
+li {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.block-cont .content-list {
+    display: inline-block;
+    margin-right: 100px;
+}
+
+/*4 levels*/
+.lower-levels h3 {
+    margin-top: 66px;
+    margin-bottom: 25px;
+}
+
+.upper-levels h3 {
+    margin-top: 66px;
+    margin-bottom: 25px;
+}

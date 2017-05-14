@@ -11,3 +11,8 @@ li {
     margin-bottom: 20px;
     margin-top: 46px;
 }
+
+.block-cont .content-list {
+    display: inline-block;
+    margin-right: 100px;
+}

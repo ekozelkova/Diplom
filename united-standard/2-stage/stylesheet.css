@@ -3,7 +3,6 @@ li {
     margin-top: 5px;
 }
 
-
 /*2-list-of-blocks*/
 .block-cont {
     margin-bottom: 89px;
@@ -12,16 +11,4 @@ li {
 .block-cont .content-list {
     display: inline-block;
     margin-right: 100px;
-}
-
-
-/*4-levels*/
-.lower-levels h3 {
-    margin-top: 66px;
-    margin-bottom: 25px;
-}
-
-.upper-levels h3 {
-    margin-top: 66px;
-    margin-bottom: 25px;
 }
