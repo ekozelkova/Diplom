@@ -18,7 +18,7 @@ class CreateRecordsTable extends Migration
             $table->integer('knowledge');
             $table->integer('profession');
             $table->integer('level');
-            $table->integer('subtopic');
+            $table->integer('subtopic')->nullable();
             $table->integer('topic');
         });
     }

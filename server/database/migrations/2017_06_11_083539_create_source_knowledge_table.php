@@ -16,6 +16,7 @@ class CreateSourceKnowledgeTable extends Migration
         Schema::create('source_knowledge', function (Blueprint $table) {
             $table->integer('source');
             $table->integer('knowledge');
+            $table->primary(['source','knowledge']);
         });
     }
 

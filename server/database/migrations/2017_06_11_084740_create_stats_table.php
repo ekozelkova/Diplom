@@ -18,6 +18,7 @@ class CreateStatsTable extends Migration
             $table->integer('user');
             $table->integer('topic');
             $table->boolean('confirmed');
+            $table->primary(['profession','user','topic']);
         });
     }
 

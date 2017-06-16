@@ -3,7 +3,7 @@
 @section('title', 'Login')
 
 @section('content')
-<form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+<form class="form-horizontal" role="form" method="POST" action="{{ route('postLogin') }}">
 	{{ csrf_field() }}
 	
 	<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">

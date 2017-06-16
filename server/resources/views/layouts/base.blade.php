@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/overview.css">
+    <link rel="stylesheet" href="{{ URL::to('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('css/common.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('css/overview.min.css') }}">
 
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ URL::to('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ URL::to('js/bootstrap.min.js') }}"></script>
 
     <title>@yield('title')</title>
 </head>
 <body>
 <div class="container">
-    <h1>Центр сертификации ЮУрГУ</h1>
+    <h1>Центр европейских квалификаций ЮУрГУ</h1>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">О проекте <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{ route('index') }}">О проекте <span class="sr-only">(current)</span></a></li>
                     <li><a href="#">Контакты</a></li>
                     @if (Auth::check())
-						<li><a href="logout">Выход</a></li>
+						<li><a href="{{ route('logout') }}">Выход</a></li>
 					@else
-						<li><a href="login">Вход</a></li>
+						<li><a href="{{ route('getLogin') }}">Вход</a></li>
 					@endif
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -36,9 +36,9 @@
 
     <div class="row">
         <ul class="nav nav-pills nav-stacked col-xs-4">
-			@foreach($professions as $profession)
+			@foreach(App\Profession::all() as $profession)
 				<li>
-					<a href="professions/{{ $profession->id }}">
+					<a href="{{ route('professions', ['id' => $profession->id]) }}">
 						{{ $profession->name }}
 					</a>
 				</li>
@@ -53,8 +53,8 @@
 
 <footer>
     <br class="container">
-        Сделано с душой на кафедре ЭВМ Южно-Уральского госудаственного университета (национальный исследовательский университет)<br>
-        <a>http://www.comp.susu.ru/</a>
+    Сделано на кафедре ЭВМ Южно-Уральского госудаственного университета (национальный исследовательский университет)<br>
+    <a>http://www.comp.susu.ru/</a>
 </footer>
 
 </body>
