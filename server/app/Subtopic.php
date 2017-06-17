@@ -3,22 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class Subtopic extends Model
 {
     protected $table = 'subtopics';
     
     public function knowledges($professionId, $topicId, $levelId)
-    {
-		$knowledges_ids = DB::table('records')->
-			where('profession', '=', $professionId)->
-			where('topic', '=', $topicId)->
-			where('subtopic', '=', $this->id)->
-			where('level', '=', $levelId)->
-			groupBy('knowledge')->
-			pluck('knowledge');
-
-		return Knowledge::find($knowledges_ids);
+    {	
+		$result = 
+			$this->belongsToMany(
+			'App\Knowledge',
+			'records',
+			'subtopic',
+			'knowledge')->
+			wherePivot('profession', '=', $professionId)->
+			wherePivot('topic', '=', $topicId)->
+			wherePivot('level', '=', $levelId)->
+			get()->
+			unique();
+			
+		return $result;
 	}
 }

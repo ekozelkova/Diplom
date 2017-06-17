@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class Profession extends Model
 {
@@ -11,46 +10,61 @@ class Profession extends Model
     
     public function euSourceStandard()
     {
-		return Standard::find($this->euSourceStandard);
+		return $this->belongsTo('App\Standard', 'euSourceStandard')->first();
 	}
 	
 	public function ruSourceStandard()
     {
-		return Standard::find($this->ruSourceStandard);
+		return $this->belongsTo('App\Standard', 'ruSourceStandard')->first();
 	}
 	
 	public function blocks()
-	{
-		$blocks_ids = DB::table('records')->
-			select('blocks.id as id')->
-			where('records.profession', '=', $this->id)->
-			join('topics', 'topics.id', '=', 'records.topic')->
-			join('blocks', 'blocks.id', '=', 'topics.block')->
-			groupBy('blocks.id')->
-			pluck('id');
+	{	
+		$topics = 
+			$this->belongsToMany(
+			'App\Topic',
+			'records',
+			'profession',
+			'topic')->
+			get();
 		
-		return Block::find($blocks_ids);
+		$result = collect();
+		
+		foreach($topics as $topic)
+		{
+			$result->push($topic->block());
+		}
+		
+		return $result->unique();
 	}
 	
 	public function lowLevelTopics()
-	{
-		$topics_ids = DB::table('records')->
-			where('profession', '=', $this->id)->
-			where('level', '<', 4)->
-			groupBy('topic')->
-			pluck('topic');
+	{		
+		$result = 
+			$this->belongsToMany(
+			'App\Topic',
+			'records',
+			'profession',
+			'topic')->
+			wherePivot('level', '<', 4)->
+			get()->
+			unique();
 			
-		return Topic::find($topics_ids);
+		return $result;
 	}
 	
 	public function highLevelTopics()
 	{
-		$topics_ids = DB::table('records')->
-			where('profession', '=', $this->id)->
-			where('level', '>', 3)->
-			groupBy('topic')->
-			pluck('topic');
+		$result = 
+			$this->belongsToMany(
+			'App\Topic',
+			'records',
+			'profession',
+			'topic')->
+			wherePivot('level', '>', 3)->
+			get()->
+			unique();
 			
-		return Topic::find($topics_ids);
+		return $result;
 	}
 }

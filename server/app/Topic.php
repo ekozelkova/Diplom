@@ -9,34 +9,29 @@ class Topic extends Model
 {
     protected $table = 'topics';
     
+    protected function levelKnowledges($professionId, $level)
+    {			
+		$result = 
+			$this->belongsToMany(
+			'App\Knowledge',
+			'records',
+			'topic',
+			'knowledge')->
+			wherePivot('profession', '=', $professionId)->
+			wherePivot('level', '=', $level)->
+			get()->
+			unique();
+		
+		return $result;
+	}
+    
     public function knowledges($professionId)
     {
-		$firstLevel = DB::table('records')->
-			select('knowledges.name as name', 'knowledges.id as id')->
-			where('records.topic', '=', $this->id)->
-			where('records.level', '=', 1)->
-			where('records.profession', '=', $professionId)->
-			join('knowledges', 'knowledges.id', '=', 'records.knowledge')->
-			groupBy('knowledges.id')->
-			get();
+		$firstLevel = $this->levelKnowledges($professionId, 1);
 			
-		$secondLevel = DB::table('records')->
-			select('knowledges.name as name', 'knowledges.id as id')->
-			where('records.topic', '=', $this->id)->
-			where('records.level', '=', 2)->
-			where('records.profession', '=', $professionId)->
-			join('knowledges', 'knowledges.id', '=', 'records.knowledge')->
-			groupBy('knowledges.id')->
-			get();
+		$secondLevel = $this->levelKnowledges($professionId, 2);
 			
-		$thirdLevel = DB::table('records')->
-			select('knowledges.name as name', 'knowledges.id as id')->
-			where('records.topic', '=', $this->id)->
-			where('records.level', '=', 3)->
-			where('records.profession', '=', $professionId)->
-			join('knowledges', 'knowledges.id', '=', 'records.knowledge')->
-			groupBy('knowledges.id')->
-			get();
+		$thirdLevel = $this->levelKnowledges($professionId, 3);
 			
 		$result = array();
 		
@@ -44,7 +39,7 @@ class Topic extends Model
 		
 		foreach($firstLevel as $knowledge)
 		{
-			$result[$i][0] = $knowledge->name;
+			$result[$i][0] = $knowledge;
 			$i++;
 		}
 		
@@ -52,7 +47,7 @@ class Topic extends Model
 		
 		foreach($secondLevel as $knowledge)
 		{
-			$result[$i][1] = $knowledge->name;
+			$result[$i][1] = $knowledge;
 			$i++;
 		}
 		
@@ -60,7 +55,7 @@ class Topic extends Model
 		
 		foreach($thirdLevel as $knowledge)
 		{
-			$result[$i][2] = $knowledge->name;
+			$result[$i][2] = $knowledge;
 			$i++;
 		}
 		
@@ -69,12 +64,21 @@ class Topic extends Model
 	
 	public function subtopics($professionId)
 	{
-		$subtopics_ids = DB::table('records')->
-			where('profession', '=', $professionId)->
-			where('topic', '=', $this->id)->
-			groupBy('subtopic')->
-			pluck('subtopic');
 			
-		return Subtopic::find($subtopics_ids);
+		$result = 
+			$this->belongsToMany(
+			'App\Subtopic',
+			'records',
+			'topic',
+			'subtopic')->
+			get()->
+			unique();
+			
+		return $result;
+	}
+	
+	public function block()
+	{
+		return $this->belongsTo('App\Block', 'block')->first();
 	}
 }

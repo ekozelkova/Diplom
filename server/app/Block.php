@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class Block extends Model
 {
@@ -11,8 +10,7 @@ class Block extends Model
     
     public function topics()
     {
-		return DB::table('topics')->
-			where('block', '=', $this->id)->
+		return Topic::where('block', '=', $this->id)->
 			get();
 	}
 }

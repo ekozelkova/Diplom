@@ -31,9 +31,9 @@
 							<tbody>
 							@foreach($topic->knowledges($displayedProfession->id) as $row)
 								<tr>
-									<td>{{ $row[0] or ''}}</td>
-									<td>{{ $row[1] or ''}}</td>
-									<td>{{ $row[2] or ''}}</td>
+									<td>{{ $row[0]->name or ''}}</td>
+									<td>{{ $row[1]->name or ''}}</td>
+									<td>{{ $row[2]->name or ''}}</td>
 								</tr>
 							@endforeach
 							</tbody>
